@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arnav Shukla - Intelligence is the log of compute</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier Prime', monospace;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 30%, #050505 100%);
+            color: #00ff88;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Animated stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* Math equations floating in background */
+        .math-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            font-family: 'Orbitron', monospace;
+            font-size: 24px;
+            color: #00ff88;
+            overflow: hidden;
+        }
+        
+        .equation {
+            position: absolute;
+            animation: float 20s infinite linear;
+            white-space: nowrap;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+        
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .title {
+            text-align: center;
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; }
+            to { text-shadow: 0 0 30px #00ffff, 0 0 60px #00ffff, 0 0 80px #00ffff; }
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 1;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .left-panel {
+            flex: 1;
+            padding: 40px;
+            background: rgba(0, 20, 40, 0.8);
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .name {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ffffff;
+        }
+        
+        .title-role {
+            font-size: 1.3rem;
+            color: #ff6b35;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 0 5px #ff6b35;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #00ff88;
+            text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+        }
+        
+        .contact {
+            font-size: 1rem;
+            color: #00ffff;
+        }
+        
+        .contact-item {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-item::before {
+            content: ">";
+            color: #ff6b35;
+            font-weight: bold;
+        }
+        
+        .contact a {
+            color: #00ffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .contact a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        .right-panel {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .image-container {
+            max-width: 100%;
+            max-height: 70vh;
+            border: 3px solid #00ff88;
+            border-radius: 15px;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.4);
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        
+        /* Glitch effect for retro feel */
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            animation: glitch-1 0.5s infinite;
+            color: #ff00ff;
+            z-index: -1;
+        }
+        
+        .glitch::after {
+            animation: glitch-2 0.5s infinite;
+            color: #00ffff;
+            z-index: -2;
+        }
+        
+        @keyframes glitch-1 {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        
+        @keyframes glitch-2 {
+            0% { transform: translate(0); }
+            20% { transform: translate(2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 2px); }
+            80% { transform: translate(-2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .name {
+                font-size: 1.8rem;
+            }
+            
+            .left-panel {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="math-bg">
+        <div class="equation" style="left: 10%; animation-delay: 0s; font-size: 18px;">∫₋∞^∞ e^(-x²) dx = √π</div>
+        <div class="equation" style="left: 60%; animation-delay: -5s; font-size: 20px;">∂²u/∂t² = c²∇²u</div>
+        <div class="equation" style="left: 30%; animation-delay: -10s; font-size: 22px;">ℒ{f(t)} = ∫₀^∞ f(t)e^(-st) dt</div>
+        <div class="equation" style="left: 80%; animation-delay: -15s; font-size: 16px;">H(s) = Y(s)/X(s)</div>
+        <div class="equation" style="left: 5%; animation-delay: -20s; font-size: 19px;">Σₖ₌₀^∞ aₖzᵏ = f(z)</div>
+        <div class="equation" style="left: 75%; animation-delay: -8s; font-size: 17px;">∇ × E = -∂B/∂t</div>
+        <div class="equation" style="left: 25%; animation-delay: -12s; font-size: 21px;">det(A - λI) = 0</div>
+        <div class="equation" style="left: 45%; animation-delay: -18s; font-size: 15px;">P(A|B) = P(B|A)P(A)/P(B)</div>
+        <div class="equation" style="left: 65%; animation-delay: -3s; font-size: 23px;">∮ F⃗ · dr⃗ = ∬ (∇ × F⃗) · n̂ dA</div>
+        <div class="equation" style="left: 15%; animation-delay: -25s; font-size: 18px;">e^(iπ) + 1 = 0</div>
+        <div class="equation" style="left: 85%; animation-delay: -7s; font-size: 20px;">lim[n→∞] (1 + 1/n)ⁿ = e</div>
+        <div class="equation" style="left: 35%; animation-delay: -14s; font-size: 16px;">∫ᵃᵇ f'(x) dx = f(b) - f(a)</div>
+    </div>
+    
+    <div class="container">
+        <h1 class="title glitch" data-text="Intelligence is the log of compute">
+            Intelligence is the log of compute
+        </h1>
+        
+        <div class="main-content">
+            <div class="left-panel">
+                <h2 class="name">Arnav Shukla</h2>
+                <p class="title-role">ECE Senior, IIITD</p>
+                <p class="description">
+                    Prospective researcher in the field of computer architecture, ML Systems and Reinforcement Learning.
+                </p>
+                
+                <div class="contact">
+                    <div class="contact-item">
+                        <a href="mailto:arnavshukla757@gmail.com">arnavshukla757@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span>+91-9818693432</span>
+                    </div>
+                    <div class="contact-item">
+                        <a href="#" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="contact-item">
+                        <a href="#" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="image-container">
+                    <div style="padding: 40px; text-align: center; color: #00ff88; font-family: 'Orbitron', monospace;">
+                        <p style="font-size: 1.2rem; margin-bottom: 20px;">// Image placeholder</p>
+                        <p style="font-size: 0.9rem; opacity: 0.7;">Upload your meme image here</p>
+                        <p style="font-size: 0.8rem; margin-top: 20px; opacity: 0.5;">Dimensions: Auto-fit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Generate random stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 100;
+            
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        createStars();
+        
+        // Add some interactive glitch effects
+        document.addEventListener('mousemove', (e) => {
+            const title = document.querySelector('.title');
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            
+            title.style.textShadow = `
+                ${x/50}px ${y/50}px 20px #00ffff,
+                ${-x/50}px ${-y/50}px 40px #ff00ff,
+                0 0 60px #00ffff
+            `;
+        });
+    </script>
+</body>
+</html>
